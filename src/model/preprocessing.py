@@ -37,13 +37,56 @@ def one_hot_encode(
 
     try:
         categories = feature_parameters[column]["encode"]["categories"]
-        drop_columns = feature_parameters[column]["encode"]["drop_columns"]
+        drop_columns = feature_parameters[column]["encode"]["drop_columns"] or []
 
         for category in categories:
             if category not in drop_columns:
                 X[column + sep + category] = (X[column] == category).astype(int)
 
         X = X.drop(columns=column)
+
+    except KeyError as err:
+        error_mesage = (
+            f"Column {err.__str__()} not found in file {FEATURE_PARAMETERS_FILE}."
+        )
+        logging.error(error_mesage)
+        raise KeyError(error_mesage)
+
+    return X
+
+
+def discretize(X: pd.DataFrame, column: str, output_column_name: str) -> pd.DataFrame:
+    """Discretize a continuos variable accorsing to predefined bins.
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Pandas dataframe with the column to be encoded
+    column : str
+        Continuos column to be discretized
+    output_column_name : str
+        Name of discretized columns
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with the column discretized
+    """
+
+    feature_parameters = load_yaml(FEATURE_PARAMETERS_FILE)
+
+    try:
+        generation_discretizer = feature_parameters[column]["discretize"]["bins"]
+
+        bins = sorted([0] + [elem[1] for elem in generation_discretizer.values()])
+
+        X[output_column_name] = pd.cut(
+            X[column], bins=bins, right=False, labels=generation_discretizer.keys()
+        )
+
+        X = X.drop(columns=column)
+
+        return X
 
     except KeyError as err:
         error_mesage = (
