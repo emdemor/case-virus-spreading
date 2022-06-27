@@ -56,7 +56,7 @@ def one_hot_encode(
 
 
 def discretize(X: pd.DataFrame, column: str, output_column_name: str) -> pd.DataFrame:
-    """Discretize a continuos variable accorsing to predefined bins.
+    """Discretize a continuous variable according to predefined bins.
 
     Parameters
     ----------
