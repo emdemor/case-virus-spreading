@@ -1,0 +1,16 @@
+grau:
+  type: null
+  encode:
+    categories: ["familia"]
+    drop_columns: null
+  imputation_strategy: null
+  limits: null
+
+proximidade:
+  type: null
+  encode:
+    categories:
+      ["visita_frequente", "visita_casual", "visita_rara", "mora_junto"]
+    drop_columns: ["visita_rara"]
+  imputation_strategy: null
+  limits: null
