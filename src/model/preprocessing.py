@@ -1,11 +1,49 @@
 import numpy as np
 import pandas as pd
 from src.base.logger import logging
-from src.base.commons import load_pickle, load_yaml
-from src.model.data import sanitize_features
+from src.base.commons import load_yaml
 from src.model.features import build_features
 
-from src.global_variables import FEATURE_PARAMETERS_FILE
+from src.global_variables import FEATURE_PARAMETERS_FILE, PARAMETERS_FILE
+
+
+def transform(X: pd.DataFrame) -> pd.DataFrame:
+    """Apply preprocessing pipeline operations
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Input dataframe
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with the feature transformed.
+    """
+
+    parameters = load_yaml(PARAMETERS_FILE)
+
+    input_columns = parameters["raw_dataframe_columns"]
+
+    for feature in input_columns:
+        if feature not in X.columns:
+            error_mesage = f"Column '{feature}' not found in input dataframe."
+            logging.error(error_mesage)
+            raise KeyError(error_mesage)
+
+    X = X[input_columns]
+
+    X = apply_constant_imputes(X)
+
+    X = build_features(X)
+
+    X = discretize_features(X)
+
+    X = encode_features(X)
+
+    X = drop_columns(X)
+
+    return X
 
 
 def one_hot_encode(
@@ -287,18 +325,3 @@ def get_features_to_encode() -> list:
     ]
 
     return result
-
-
-def apply_preprocess(X: pd.DataFrame):
-
-    X = apply_constant_imputes(X)
-
-    X = build_features(X)
-
-    X = discretize_features(X)
-
-    X = encode_features(X)
-
-    X = drop_columns(X)
-
-    return X
