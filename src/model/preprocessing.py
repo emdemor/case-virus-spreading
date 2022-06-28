@@ -84,7 +84,8 @@ def discretize(X: pd.DataFrame, column: str, output_column_name: str) -> pd.Data
             X[column], bins=bins, right=False, labels=generation_discretizer.keys()
         )
 
-        X = X.drop(columns=column)
+        if column != output_column_name:
+            X = X.drop(columns=column)
 
         return X
 
@@ -96,6 +97,29 @@ def discretize(X: pd.DataFrame, column: str, output_column_name: str) -> pd.Data
         raise KeyError(error_mesage)
 
     return X
+
+
+def get_features_to_impute() -> dict:
+    """Read feature parameters file and return
+    a dict of features and values to constant impute
+
+    Returns
+    -------
+    list
+        Dict of features to cosntant impute
+    """
+
+    parameters = load_yaml(FEATURE_PARAMETERS_FILE)
+
+    return {
+        x[0]: x[1]["constant_impute"]
+        for x in list(
+            filter(
+                lambda x: "constant_impute" in x[1],
+                [(key, value) for key, value in parameters.items()],
+            )
+        )
+    }
 
 
 def apply_preprocess(preprocessor, X: pd.DataFrame):
