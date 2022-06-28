@@ -55,50 +55,6 @@ def one_hot_encode(
     return X
 
 
-def discretize(X: pd.DataFrame, column: str, output_column_name: str) -> pd.DataFrame:
-    """Discretize a continuous variable according to predefined bins.
-
-    Parameters
-    ----------
-    X : pd.DataFrame
-        Pandas dataframe with the column to be encoded
-    column : str
-        Continuos column to be discretized
-    output_column_name : str
-        Name of discretized columns
-
-    Returns
-    -------
-    pd.DataFrame
-        Dataframe with the column discretized
-    """
-
-    feature_parameters = load_yaml(FEATURE_PARAMETERS_FILE)
-
-    try:
-        generation_discretizer = feature_parameters[column]["discretize"]["bins"]
-
-        bins = sorted([0] + [elem[1] for elem in generation_discretizer.values()])
-
-        X[output_column_name] = pd.cut(
-            X[column], bins=bins, right=False, labels=generation_discretizer.keys()
-        )
-
-        if column != output_column_name:
-            X = X.drop(columns=column)
-
-        return X
-
-    except KeyError as err:
-        error_mesage = (
-            f"Column {err.__str__()} not found in file {FEATURE_PARAMETERS_FILE}."
-        )
-        logging.error(error_mesage)
-        raise KeyError(error_mesage)
-
-    return X
-
-
 def get_features_to_impute() -> dict:
     """Read feature parameters file and return
     a dict of features and values to constant impute
@@ -140,32 +96,6 @@ def apply_constant_imputes(X: pd.DataFrame) -> pd.DataFrame:
 
     for column in imputations:
         X[column] = X[column].fillna(imputations[column])
-
-    return X
-
-
-def build_features(X: pd.DataFrame) -> pd.DataFrame:
-    """Cosntruct new feature from raw dataset
-
-    Parameters
-    ----------
-    X : pd.DataFrame
-        Input dataset
-
-    Returns
-    -------
-    pd.DataFrame
-        New dataframe with constructed features
-    """
-
-    X["V1_estado_civil"] = np.where(
-        (X["V1_estado_civil"] == "casado") | (X["V1_estado_civil"] == "divorciado"),
-        "caso_ou_divorciado",
-        X["V1_estado_civil"],
-    )
-
-    X["V1_tem_filhos"] = X["V1_qt_filhos"].clip(0, 1)
-    X = X.drop(columns="V1_tem_filhos")
 
     return X
 
@@ -214,6 +144,99 @@ def drop_columns(X: pd.DataFrame) -> pd.DataFrame:
     X = X.drop(columns=columns_to_drop)
 
     return X
+
+
+def discretize(X: pd.DataFrame, column: str, output_column_name: str) -> pd.DataFrame:
+    """Discretize a continuous variable according to predefined bins.
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Pandas dataframe with the column to be encoded
+    column : str
+        Continuos column to be discretized
+    output_column_name : str
+        Name of discretized columns
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with the column discretized
+    """
+
+    feature_parameters = load_yaml(FEATURE_PARAMETERS_FILE)
+
+    try:
+        generation_discretizer = feature_parameters[column]["discretize"]["bins"]
+
+        bins = sorted([0] + [elem[1] for elem in generation_discretizer.values()])
+
+        X[output_column_name] = pd.cut(
+            X[column], bins=bins, right=False, labels=generation_discretizer.keys()
+        )
+
+        if column != output_column_name:
+            X = X.drop(columns=column)
+
+        return X
+
+    except KeyError as err:
+        error_mesage = (
+            f"Column {err.__str__()} not found in file {FEATURE_PARAMETERS_FILE}."
+        )
+        logging.error(error_mesage)
+        raise KeyError(error_mesage)
+
+    return X
+
+
+def discretize_features(X: pd.DataFrame) -> pd.DataFrame:
+    """Apply discretization operation according to the features
+    in parameter_features yaml file.
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Input dataframe
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with features discretized
+    """
+
+    for cont, disc in get_discretized_output_names().items():
+        if cont in X.columns:
+            X = discretize(X, cont, disc)
+        else:
+            error_mesage = f"Column '{cont}' not found in input dataframe."
+            logging.error(error_mesage)
+            raise KeyError(error_mesage)
+
+    return X
+
+
+def get_discretized_output_names() -> dict:
+    """Read feature parameters file and return a dict of
+    features to be discretized related to the output column name.
+
+    Returns
+    -------
+    dict
+        Dict of features to discretize and the output column name
+    """
+
+    parameters = load_yaml(FEATURE_PARAMETERS_FILE)
+
+    result = {
+        x[0]: x[1]["discretize"]["output_column"]
+        for x in filter(
+            lambda x: "discretize" in x[1],
+            [(key, value) for key, value in parameters.items()],
+        )
+    }
+
+    return result
 
 
 def apply_preprocess(preprocessor, X: pd.DataFrame):
