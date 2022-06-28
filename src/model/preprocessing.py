@@ -289,23 +289,16 @@ def get_features_to_encode() -> list:
     return result
 
 
-def apply_preprocess(preprocessor, X: pd.DataFrame):
+def apply_preprocess(X: pd.DataFrame):
 
-    X = preprocessor.transform(X)
+    X = apply_constant_imputes(X)
 
-    # Custom steps...
-
-    return X
-
-
-def preprocess_transform(X: pd.DataFrame) -> pd.DataFrame:
-
-    filepaths = load_yaml(filename="config/filepaths.yaml")
-
-    preprocessor = load_pickle(filepaths["model_preprocessor_path"])
-
-    X = sanitize_features(X)
     X = build_features(X)
-    X = apply_preprocess(preprocessor, X)
+
+    X = discretize_features(X)
+
+    X = encode_features(X)
+
+    X = drop_columns(X)
 
     return X
