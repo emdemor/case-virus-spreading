@@ -10,28 +10,28 @@ from src.base.commons import load_yaml, to_snake_case
 PARAMETERS_CONFIG = load_yaml(filename="config/parameters.yaml")
 
 
-def build_features(data: pd.DataFrame) -> pd.DataFrame:
-    return data
+def build_features(X: pd.DataFrame) -> pd.DataFrame:
+    """Cosntruct new feature from raw dataset
 
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Input dataset
 
-def generate_dummy_variables(
-    dataframe: pd.DataFrame,
-    column: str,
-    categories: list or tuple or np.array,
-    sep: str = "_",
-    prefix: Any = "column",
-):
-    if prefix == "column":
-        prefix = column
+    Returns
+    -------
+    pd.DataFrame
+        New dataframe with constructed features
+    """
 
-    for cat in categories:
-        if prefix is not None:
-            column_name = prefix + sep + cat
-        else:
-            column_name = cat
+    X["V1_estado_civil"] = np.where(
+        (X["V1_estado_civil"] == "casado") | (X["V1_estado_civil"] == "divorciado"),
+        "caso_ou_divorciado",
+        X["V1_estado_civil"],
+    )
 
-        dataframe = dataframe.assign(
-            **{column_name: (dataframe[column] == cat).astype(float)}
-        )
+    X["V1_tem_filhos"] = X["V1_qt_filhos"].clip(0, 1)
 
-    return dataframe
+    X = X.drop(columns="V1_qt_filhos")
+
+    return X

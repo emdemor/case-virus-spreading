@@ -5,8 +5,11 @@ import numpy as np
 
 from src.base.logger import logging
 from src.base.commons import load_yaml, read_csv
-
-PARAMETERS_CONFIG = load_yaml(filename="config/parameters.yaml")
+from src.global_variables import (
+    FEATURE_PARAMETERS_FILE,
+    FILEPATHS_FILE,
+    PARAMETERS_FILE,
+)
 
 
 def make_datasets() -> pd.DataFrame:
@@ -109,7 +112,7 @@ def persist_interim_table(table: pd.DataFrame, filename: str, *args, **kwargs) -
         Path to the output parquet file
     """
 
-    filepaths = load_yaml("config/filepaths.yaml")
+    filepaths = load_yaml(FILEPATHS_FILE)
 
     interim_path = os.path.join(
         filepaths["interim_directory_path"],
@@ -123,5 +126,28 @@ def persist_interim_table(table: pd.DataFrame, filename: str, *args, **kwargs) -
         raise err
 
 
-def sanitize_features():
-    pass
+def persist_processed_table(
+    table: pd.DataFrame, filename: str, *args, **kwargs
+) -> None:
+    """Persist a dataframe to a parquet file in the processed data folder.
+
+    Parameters
+    ----------
+    table : pd.DataFrame
+        Pandas dataframe to be persisted.
+    filename : str
+        Path to the output parquet file
+    """
+
+    filepaths = load_yaml(FILEPATHS_FILE)
+
+    processed_path = os.path.join(
+        filepaths["processed_directory_path"],
+        filename + ".parquet",
+    )
+
+    try:
+        table.to_parquet(processed_path, *args, **kwargs)
+    except Exception as err:
+        logging.error(err)
+        raise err

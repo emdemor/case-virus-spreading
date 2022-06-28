@@ -1,5 +1,6 @@
 logs_directory_path: logs/
 interim_directory_path: data/interim/
+processed_directory_path: data/processed/
 data_raw_conexoes_path: data/raw/conexoes_espec.csv
 data_raw_individuos_path: data/raw/individuos_espec.csv
 model_preprocessor_path: model/preprocessor.pickle

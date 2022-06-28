@@ -1,0 +1,18 @@
+model: xgboost
+
+static_parameters:
+  eval_metric: rmse
+  early_stopping_rounds: 200
+  random_state: null
+
+opt_config:
+  n_folds: 3
+  n_calls: 15
+  n_random_starts: 1
+  verbose: 1
+  random_state: null
+
+fit_parameters:
+  verbose: 0
+
+parametric_space_path: model/xgboost/config.json
