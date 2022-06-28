@@ -1,16 +1,130 @@
 grau:
-  type: null
+  constant_impute: trabalho
   encode:
     categories: ["familia"]
     drop_columns: null
-  imputation_strategy: null
-  limits: null
 
 proximidade:
-  type: null
+  constant_impute: visita_rara
   encode:
     categories:
       ["visita_frequente", "visita_casual", "visita_rara", "mora_junto"]
-    drop_columns: ["visita_rara"]
-  imputation_strategy: null
-  limits: null
+    drop_columns: ["mora_junto"]
+
+V1_idade:
+  constant_impute: 30.006
+  discretize:
+    output_column: V1_geracao
+    bins:
+      silent: [78, 200]
+      baby_boomer: [58, 78]
+      gen_x: [43, 58]
+      gen_y: [27, 43]
+      gen_z: [13, 27]
+      gen_alpha: [0, 13]
+
+V1_geracao:
+  encode:
+    categories:
+      ["silent", "baby_boomer", "gen_x", "gen_y", "gen_z", "gen_alpha"]
+    drop_columns: ["gen_alpha"]
+
+V2_idade:
+  constant_impute: 30.015
+  discretize:
+    output_column: V2_geracao
+    bins:
+      silent: [78, 200]
+      baby_boomer: [58, 78]
+      gen_x: [43, 58]
+      gen_y: [27, 43]
+      gen_z: [13, 27]
+      gen_alpha: [0, 13]
+
+V2_geracao:
+  encode:
+    categories:
+      ["silent", "baby_boomer", "gen_x", "gen_y", "gen_z", "gen_alpha"]
+    drop_columns: ["gen_alpha"]
+
+V1_IMC:
+  constant_impute: 22.458
+  discretize:
+    output_column: V1_IMC
+    bins:
+      baixo_peso: [0, 18.5]
+      normal: [18.5, 25]
+      sobrepeso: [25, 30]
+      obeso_1: [30, 35]
+      obeso_2: [35, 40]
+      obeso_3: [40, 300]
+  encode:
+    categories:
+      ["baixo_peso", "normal", "sobrepeso", "obeso_1", "obeso_2", "obeso_3"]
+    drop_columns: ["baixo_peso"]
+
+V2_IMC:
+  constant_impute: 22.478
+  discretize:
+    output_column: V2_IMC
+    bins:
+      baixo_peso: [0, 18.5]
+      normal: [18.5, 25]
+      sobrepeso: [25, 30]
+      obeso_1: [30, 35]
+      obeso_2: [35, 40]
+      obeso_3: [40, 300]
+  encode:
+    categories:
+      ["baixo_peso", "normal", "sobrepeso", "obeso_1", "obeso_2", "obeso_3"]
+    drop_columns: ["baixo_peso"]
+
+V1_estado_civil:
+  constant_impute: solteiro
+  encode:
+    categories: ["caso_ou_divorciado", "viuvo", "solteiro"]
+    drop_columns: ["viuvo"]
+
+V2_estado_civil:
+  constant_impute: solteiro
+  drop: True
+
+V1_transporte_mais_utilizado:
+  constant_impute: publico
+  encode:
+    categories: ["publico", "particular", "taxi"]
+    drop_columns: ["taxi"]
+
+V2_transporte_mais_utilizado:
+  constant_impute: publico
+  encode:
+    categories: ["publico", "particular", "taxi"]
+    drop_columns: ["taxi"]
+
+V1_qt_filhos:
+  constant_impute: 0
+
+V1_estuda:
+  constant_impute: 0
+
+V1_trabalha:
+  constant_impute: 1
+
+V1_pratica_esportes:
+  constant_impute: 1
+
+V2_qt_filhos:
+  constant_impute: 0
+  drop: True
+
+V2_estuda:
+  constant_impute: 0
+  drop: True
+
+V2_trabalha:
+  constant_impute: 1
+  drop: True
+
+V2_pratica_esportes:
+  constant_impute: 1
+  drop: True
