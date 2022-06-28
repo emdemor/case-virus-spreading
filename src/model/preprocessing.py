@@ -170,6 +170,31 @@ def build_features(X: pd.DataFrame) -> pd.DataFrame:
     return X
 
 
+def get_features_to_drop() -> list:
+    """Read feature parameters file and returna list of feature to drop
+
+    Returns
+    -------
+    list
+        List of features to drop
+    """
+
+    parameters = load_yaml(FEATURE_PARAMETERS_FILE)
+
+    result = [
+        x[0]
+        for x in filter(
+            lambda x: x[1]["drop"],
+            filter(
+                lambda x: "drop" in x[1],
+                [(key, value) for key, value in parameters.items()],
+            ),
+        )
+    ]
+
+    return result
+
+
 def apply_preprocess(preprocessor, X: pd.DataFrame):
 
     X = preprocessor.transform(X)
