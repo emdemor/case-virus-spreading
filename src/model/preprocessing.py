@@ -195,6 +195,27 @@ def get_features_to_drop() -> list:
     return result
 
 
+def drop_columns(X: pd.DataFrame) -> pd.DataFrame:
+    """Cosntruct new feature from raw dataset
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Input dataset
+
+    Returns
+    -------
+    pd.DataFrame
+        New dataframe with constructed features
+    """
+
+    columns_to_drop = get_features_to_drop()
+
+    X = X.drop(columns=columns_to_drop)
+
+    return X
+
+
 def apply_preprocess(preprocessor, X: pd.DataFrame):
 
     X = preprocessor.transform(X)
