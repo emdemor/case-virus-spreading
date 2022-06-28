@@ -122,6 +122,28 @@ def get_features_to_impute() -> dict:
     }
 
 
+def apply_constant_imputes(X: pd.DataFrame) -> pd.DataFrame:
+    """Apply constant imputations defined on features parameter file
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Input dataframe
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with features imputed
+    """
+
+    imputations = get_features_to_impute()
+
+    for column in imputations:
+        X[column] = X[column].fillna(imputations[column])
+
+    return X
+
+
 def apply_preprocess(preprocessor, X: pd.DataFrame):
 
     X = preprocessor.transform(X)
