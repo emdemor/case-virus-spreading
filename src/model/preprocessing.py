@@ -239,6 +239,56 @@ def get_discretized_output_names() -> dict:
     return result
 
 
+def encode_features(X: pd.DataFrame) -> pd.DataFrame:
+    """Apply one-hot-encode operation according to the features
+    in parameter_features yaml file.
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Input dataframe
+
+    Returns
+    -------
+    pd.DataFrame
+        Dataframe with features encoded
+    """
+
+    features_to_encode = get_features_to_encode()
+
+    for feature in features_to_encode:
+        if feature in X.columns:
+            X = one_hot_encode(X, feature)
+        else:
+            error_mesage = f"Column '{feature}' not found in input dataframe."
+            logging.error(error_mesage)
+            raise KeyError(error_mesage)
+
+    return X
+
+
+def get_features_to_encode() -> list:
+    """Read feature parameters file and return a list of features to encode
+
+    Returns
+    -------
+    list
+        List of features to encode
+    """
+
+    parameters = load_yaml(FEATURE_PARAMETERS_FILE)
+
+    result = [
+        x[0]
+        for x in filter(
+            lambda x: "encode" in x[1],
+            [(key, value) for key, value in parameters.items()],
+        )
+    ]
+
+    return result
+
+
 def apply_preprocess(preprocessor, X: pd.DataFrame):
 
     X = preprocessor.transform(X)
