@@ -1,3 +1,25 @@
 train_test_split:
   test_size: 0.25
   random_state: 42
+
+raw_dataframe_columns:
+  [
+    "grau",
+    "proximidade",
+    "V1_idade",
+    "V1_estado_civil",
+    "V1_qt_filhos",
+    "V1_estuda",
+    "V1_trabalha",
+    "V1_pratica_esportes",
+    "V1_transporte_mais_utilizado",
+    "V1_IMC",
+    "V2_idade",
+    "V2_estado_civil",
+    "V2_qt_filhos",
+    "V2_estuda",
+    "V2_trabalha",
+    "V2_pratica_esportes",
+    "V2_transporte_mais_utilizado",
+    "V2_IMC",
+  ]
