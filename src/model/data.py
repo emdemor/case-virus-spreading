@@ -176,3 +176,39 @@ def persist_processed_table(
     except Exception as err:
         logging.error(err)
         raise err
+
+
+def read_data_train_test():
+
+    filepaths = load_yaml(FILEPATHS_FILE)
+
+    X_train = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "X_train_transf.parquet",
+        )
+    )
+
+    y_train = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "y_train.parquet",
+        )
+    ).iloc[:, 0]
+
+    # Dados de Validação
+    X_validation = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "X_validation_transf.parquet",
+        )
+    )
+
+    y_validation = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "y_validation.parquet",
+        )
+    ).iloc[:, 0]
+
+    return X_train, X_validation, y_train, y_validation
