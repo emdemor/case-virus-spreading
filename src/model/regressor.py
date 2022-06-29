@@ -1,10 +1,17 @@
 from xgboost import XGBRegressor
+from lightgbm import LGBMRegressor
 from src.base.commons import load_pickle, load_yaml
+from src.global_variables import (
+    FEATURE_PARAMETERS_FILE,
+    FILEPATHS_FILE,
+    PARAMETERS_FILE,
+    MODEL_CONFIG_FILE,
+)
 
 
 def set_regressor(model, **regressor_args):
 
-    model_config = load_yaml(f"config/model.yaml")
+    model_config = load_yaml(MODEL_CONFIG_FILE)
 
     static_parameters = model_config["static_parameters"]
 
@@ -14,10 +21,14 @@ def set_regressor(model, **regressor_args):
         model = XGBRegressor(**static_parameters, **regressor_args)
         return model
 
+    if model == "lightgbm":
+        model = LGBMRegressor(**static_parameters, **regressor_args)
+        return model
+
 
 def get_regressor():
-    filepaths = load_yaml(filename="config/filepaths.yaml")
-    model_config = load_yaml(f"config/model.yaml")
+    filepaths = load_yaml(filename=FILEPATHS_FILE)
+    model_config = load_yaml(MODEL_CONFIG_FILE)
 
     regressor = load_pickle(
         filepaths["model_regressor_path"].format(model=model_config["model"])
@@ -26,7 +37,7 @@ def get_regressor():
 
 
 def get_model_parameters():
-    model_config = load_yaml("config/model.yaml")
+    model_config = load_yaml(MODEL_CONFIG_FILE)
 
     model_parameters = {}
     model_parameters["model"] = model_config["model"]
