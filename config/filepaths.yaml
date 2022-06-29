@@ -3,5 +3,9 @@ interim_directory_path: data/interim/
 processed_directory_path: data/processed/
 data_raw_conexoes_path: data/raw/conexoes_espec.csv
 data_raw_individuos_path: data/raw/individuos_espec.csv
+data_train_features_path: data/processed/train/X.parquet
+data_train_target_path: data/processed/train/y.parquet
+data_test_features_path: data/processed/test/X.parquet
+data_test_target_path: data/processed/test/y.parquet
 model_preprocessor_path: model/preprocessor.pickle
-model_regressor_path: model/regressor.pickle
+model_regressor_path: model/{model}/regressor.pickle
