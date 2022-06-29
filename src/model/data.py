@@ -2,6 +2,7 @@ import os
 
 import pandas as pd
 import numpy as np
+from sklearn.model_selection import train_test_split
 
 from src.base.logger import logging
 from src.base.commons import load_yaml, read_csv
@@ -10,6 +11,30 @@ from src.global_variables import (
     FILEPATHS_FILE,
     PARAMETERS_FILE,
 )
+
+
+def prepare_datasets() -> None:
+    """ Pipeline for data preparation """
+
+    # Import parameters file
+    parameters = load_yaml(PARAMETERS_FILE)
+
+    logging.info("Get full dataset")
+    df_raw = make_datasets()
+
+    logging.info("Split into modelling and predict datasets")
+    data_modelling, data_predict = modelling_predict_split(df_raw)
+
+    logging.info("Split modelling data into train and test")
+    data_train, data_validation = train_test_split(
+        data_modelling, **parameters["train_test_split"]
+    )
+
+    logging.info("Persists interim dataframes")
+    persist_interim_table(data_modelling, "data_modelling")
+    persist_interim_table(data_predict, "data_predict")
+    persist_interim_table(data_train, "data_train")
+    persist_interim_table(data_validation, "data_validation")
 
 
 def make_datasets() -> pd.DataFrame:
@@ -151,3 +176,39 @@ def persist_processed_table(
     except Exception as err:
         logging.error(err)
         raise err
+
+
+def read_data_train_test():
+
+    filepaths = load_yaml(FILEPATHS_FILE)
+
+    X_train = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "X_train_transf.parquet",
+        )
+    )
+
+    y_train = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "y_train.parquet",
+        )
+    ).iloc[:, 0]
+
+    # Dados de Validação
+    X_validation = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "X_validation_transf.parquet",
+        )
+    )
+
+    y_validation = pd.read_parquet(
+        os.path.join(
+            filepaths["processed_directory_path"],
+            "y_validation.parquet",
+        )
+    ).iloc[:, 0]
+
+    return X_train, X_validation, y_train, y_validation
