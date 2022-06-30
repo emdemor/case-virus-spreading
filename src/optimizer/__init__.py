@@ -23,7 +23,7 @@ def gaussian_process_optimization(X_train, y_train, sample=None):
     model_parameters = load_json(model_config["parametric_space_path"])
 
     hyper_param = {
-        hp["parameter"]: hp["best_value"] for hp in model_parameters["parametric_space"]
+        hp["parameter"]: hp["estimate"] for hp in model_parameters["parametric_space"]
     }
 
     space = [
