@@ -1,0 +1,11 @@
+#!/usr/bin/env python
+
+from src.base.logger import logging
+from src.optimizer import optimize_regressor
+
+if __name__ == "__main__":
+    try:
+        optimize_regressor()
+    except Exception as err:
+        logging.error(err)
+        raise err

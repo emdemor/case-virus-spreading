@@ -25,3 +25,24 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 sudo chmod +x make.sh
 ./make.sh
 ```
+
+## Aplicação
+
+* Treinamente do modelo
+``` bash
+train
+```
+
+* Treinamento do modelo com otimização de hiperparâmetros
+``` bash
+train --optimize=True
+```
+* Otimização de hiperparâmetros
+``` bash
+optimize
+```
+
+* Predição dos dados fantantes
+``` bash
+predict --output_file=data/predicted/prob_predictions.csv
+```

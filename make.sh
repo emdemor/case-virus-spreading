@@ -10,6 +10,9 @@ echo "                                                       |___/ "
 echo "Eduardo M. de Morais"
 
 echo "Setting directories"
+
+export PATH=$PATH:$(pwd)/cli
+
 mkdir -p logs
 
 mkdir -p data/interim
