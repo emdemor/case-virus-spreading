@@ -10,7 +10,6 @@ from src.optimizer import gaussian_process_optimization
 
 
 from sklearn.metrics import mean_absolute_error, r2_score
-from src.model.regressor import set_regressor
 
 from src.global_variables import (
     FEATURE_PARAMETERS_FILE,
@@ -22,6 +21,7 @@ from src.global_variables import (
 
 def optimize_regressor():
 
+    filepaths = load_yaml(filename=FILEPATHS_FILE)
     model_config = load_yaml(MODEL_CONFIG_FILE)
     model_parameters = load_json(model_config["parametric_space_path"])
 
@@ -46,13 +46,13 @@ def optimize_regressor():
     mae_proposal = mean_absolute_error(y_test, y_test_pred)
     r2_proposal = r2_score(y_test, y_test_pred)
 
-    logging.info("mae_proposed = {:.2f}".format(mae_proposal))
-    logging.info("R2_proposed = {:.2f}".format(r2_proposal))
+    logging.info("mae_proposed = {:.6f}".format(mae_proposal))
+    logging.info("R2_proposed = {:.6f}".format(r2_proposal))
 
     mae_current = model_parameters["metric"]["value"]
 
-    logging.info("mae_current = {:.3f}".format(mae_current))
-    logging.info("mae_proposal = {:.3f}".format(mae_proposal))
+    logging.info("mae_current = {:.6f}".format(mae_current))
+    logging.info("mae_proposal = {:.6f}".format(mae_proposal))
 
     if mae_proposal < mae_current:
 
@@ -66,6 +66,11 @@ def optimize_regressor():
         model_parameters["metric"].update({"value": mae_proposal})
 
         dump_json(model_parameters, model_config["parametric_space_path"], indent=4)
+
+        dump_pickle(
+            proposal_regessor,
+            filepaths["model_regressor_path"].format(model=model_config["model"]),
+        )
 
     else:
         logging.info(
