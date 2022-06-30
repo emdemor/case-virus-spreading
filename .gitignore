@@ -7,7 +7,9 @@ venv/
 .fuse*
 *.log
 
-data/
+data/interim/
+data/processed/
+data/external/
 
 # C extensions
 *.so
