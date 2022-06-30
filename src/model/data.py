@@ -178,7 +178,14 @@ def persist_processed_table(
         raise err
 
 
-def read_data_train_test():
+def read_data_train_test() -> tuple:
+    """Read features and target for train and test
+
+    Returns
+    -------
+    tuple
+        A tuple conaianing X_train, X_test, y_train, y_test
+    """
 
     filepaths = load_yaml(FILEPATHS_FILE)
 
