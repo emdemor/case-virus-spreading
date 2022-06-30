@@ -1,7 +1,19 @@
 from skopt.space import Real, Categorical, Integer
 
 
-def eval_parametric_space_dimension(parameter_dict):
+def eval_parametric_space_dimension(parameter_dict: dict) -> list:
+    """Eval the parametric space in format of skopt-lib.
+
+    Parameters
+    ----------
+    parameter_dict : dict
+        Dictionary with hyperparameter properties
+
+    Returns
+    -------
+    list
+        List of parametric space properties
+    """
 
     if parameter_dict["type"] == "real":
         return Real(
