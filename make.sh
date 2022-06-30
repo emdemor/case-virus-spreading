@@ -9,15 +9,6 @@ echo "                                                        __/ |"
 echo "                                                       |___/ "
 echo "Eduardo M. de Morais"
 
-echo "Setting conda environment"
-conda env create -n neoway --file environment.yml
-
-echo "Setting conda environment"
-conda activate neoway
-
-echo "Setting environment variables"
-export PYTHONPATH=$PYTHONPATH:$(pwd)
-
 echo "Setting directories"
 mkdir -p logs
 
@@ -27,8 +18,4 @@ mkdir -p data/external
 
 mkdir -p data/predicted
 
-mkdir -p data/
-
-conda deactivate
-
-echo "Activate conda environment with 'conda activate neoway'"
+mkdir -p data/processed/
