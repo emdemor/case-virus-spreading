@@ -4,7 +4,7 @@ import yaml
 
 from src.base.logger import logging
 from src.base.commons import dump_json, dump_pickle, load_json, load_yaml
-from src.model.regressor import get_model_parameters, set_regressor
+from src.model.regressor import set_regressor
 from src.model.data import read_data_train_test
 from src.optimizer import gaussian_process_optimization
 
@@ -20,6 +20,7 @@ from src.global_variables import (
 
 
 def optimize_regressor():
+    """ Trigger for model hyperparamter tunning """
 
     filepaths = load_yaml(filename=FILEPATHS_FILE)
     model_config = load_yaml(MODEL_CONFIG_FILE)
@@ -79,4 +80,8 @@ def optimize_regressor():
 
 
 if __name__ == "__main__":
-    optimize_regressor()
+    try:
+        optimize_regressor()
+    except Exception as err:
+        logging.error(err)
+        raise err
