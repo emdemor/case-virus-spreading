@@ -10,9 +10,9 @@ git clone git@github.com:emdemor/case-neoway.git
 
 * Configurar o ambiente conda
 ``` bash
-conda env create -n neoway --file environment.yml
-conda activate neoway
 cd case-neoway
+conda env create -n case-neoway --file environment.yml
+conda activate case-neoway
 ```
 
 * Configurar as variáveis de ambiente
