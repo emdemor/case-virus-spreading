@@ -23,7 +23,7 @@ source make.sh
 
 ## Aplicação
 
-* Treinamente do modelo
+* Treinamento do modelo
 ``` bash
 train
 ```
