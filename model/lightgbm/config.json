@@ -1,51 +1,69 @@
 {
-  "model": "lightgbm",
-  "metric": {
-    "name": "mae",
-    "value": 0.05207975145344875,
-    "greater_is_better": false
-  },
-  "parametric_space": [
-    {
-      "parameter": "learning_rate",
-      "estimate": 0.15,
-      "range": [0.05, 0.3],
-      "step": 0.01,
-      "type": "real"
+    "model": "lightgbm",
+    "metric": {
+        "name": "mae",
+        "value": 0.05197291011799418,
+        "greater_is_better": false
     },
-    {
-      "parameter": "n_estimators",
-      "estimate": 112,
-      "range": [72, 142],
-      "step": 1,
-      "type": "integer"
-    },
-    {
-      "parameter": "max_depth",
-      "estimate": 23,
-      "range": [10, 33],
-      "step": 1,
-      "type": "integer"
-    },
-    {
-      "parameter": "boosting_type",
-      "categories": ["gbdt", "dart"],
-      "estimate": "gbdt",
-      "type": "categorical"
-    },
-    {
-      "parameter": "min_child_samples",
-      "estimate": 17,
-      "range": [10, 23],
-      "step": 1,
-      "type": "integer"
-    },
-    {
-      "parameter": "num_leaves",
-      "estimate": 28,
-      "range": [18, 38],
-      "step": 1,
-      "type": "integer"
-    }
-  ]
+    "parametric_space": [
+        {
+            "parameter": "learning_rate",
+            "estimate": 0.09121882445855661,
+            "range": [
+                0.05,
+                0.3
+            ],
+            "step": 0.01,
+            "type": "real"
+        },
+        {
+            "parameter": "n_estimators",
+            "estimate": 131,
+            "range": [
+                72,
+                142
+            ],
+            "step": 1,
+            "type": "integer"
+        },
+        {
+            "parameter": "max_depth",
+            "estimate": 25,
+            "range": [
+                10,
+                33
+            ],
+            "step": 1,
+            "type": "integer"
+        },
+        {
+            "parameter": "boosting_type",
+            "categories": [
+                "gbdt",
+                "dart"
+            ],
+            "estimate": "gbdt",
+            "type": "categorical"
+        },
+        {
+            "parameter": "min_child_samples",
+            "estimate": 18,
+            "range": [
+                10,
+                23
+            ],
+            "step": 1,
+            "type": "integer"
+        },
+        {
+            "parameter": "num_leaves",
+            "estimate": 38,
+            "range": [
+                18,
+                38
+            ],
+            "step": 1,
+            "type": "integer"
+        }
+    ]
 }
