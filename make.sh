@@ -11,6 +11,8 @@ echo "Eduardo M. de Morais"
 
 echo "Setting directories"
 
+export PYTHONPATH=$PYTHONPATH:$(pwd)
+
 export PATH=$PATH:$(pwd)/cli
 
 mkdir -p logs

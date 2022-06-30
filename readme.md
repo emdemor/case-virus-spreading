@@ -15,15 +15,10 @@ conda env create -n case-neoway --file environment.yml
 conda activate case-neoway
 ```
 
-* Configurar as variáveis de ambiente
-``` bash
-export PYTHONPATH=$PYTHONPATH:$(pwd)
-```
-
 * Rodar o makefile
 ``` bash
 sudo chmod +x make.sh
-./make.sh
+source make.sh
 ```
 
 ## Aplicação
