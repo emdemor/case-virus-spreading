@@ -2,13 +2,13 @@
     "model": "lightgbm",
     "metric": {
         "name": "mae",
-        "value": 0.05197291011799418,
+        "value": 0.0519615152896063,
         "greater_is_better": false
     },
     "parametric_space": [
         {
             "parameter": "learning_rate",
-            "estimate": 0.09121882445855661,
+            "estimate": 0.10760377273575718,
             "range": [
                 0.05,
                 0.3
@@ -18,7 +18,7 @@
         },
         {
             "parameter": "n_estimators",
-            "estimate": 131,
+            "estimate": 127,
             "range": [
                 72,
                 142
@@ -28,7 +28,7 @@
         },
         {
             "parameter": "max_depth",
-            "estimate": 25,
+            "estimate": 30,
             "range": [
                 10,
                 33
@@ -47,7 +47,7 @@
         },
         {
             "parameter": "min_child_samples",
-            "estimate": 18,
+            "estimate": 15,
             "range": [
                 10,
                 23
@@ -57,7 +57,7 @@
         },
         {
             "parameter": "num_leaves",
-            "estimate": 38,
+            "estimate": 32,
             "range": [
                 18,
                 38
