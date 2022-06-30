@@ -37,7 +37,7 @@ train --optimize=True
 optimize
 ```
 
-* Predição dos dados fantantes
+* Predição dos dados faltantes
 ``` bash
 predict --output_file=data/predicted/prob_predictions.csv
 ```
