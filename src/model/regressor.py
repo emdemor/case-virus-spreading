@@ -1,6 +1,7 @@
+from sklearn.base import RegressorMixin
 from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
-from src.base.commons import load_pickle, load_yaml
+from src.base.commons import load_json, load_pickle, load_yaml
 from src.global_variables import (
     FEATURE_PARAMETERS_FILE,
     FILEPATHS_FILE,
@@ -9,7 +10,20 @@ from src.global_variables import (
 )
 
 
-def set_regressor(model, **regressor_args):
+def set_regressor(model: RegressorMixin, **regressor_args) -> RegressorMixin:
+    """Instantiate regressor class according to the
+    parameters specified in MODEL_CONFIG_FILE
+
+    Parameters
+    ----------
+    model : RegressorMixin
+        Description of regressor model
+
+    Returns
+    -------
+    RegressorMixin
+        A regressor instance
+    """
 
     model_config = load_yaml(MODEL_CONFIG_FILE)
 
@@ -27,6 +41,14 @@ def set_regressor(model, **regressor_args):
 
 
 def get_regressor():
+    """Imports the trained model according to MODEL_CONFIG_FILE
+
+    Returns
+    -------
+    RegressorMixin
+        A regressor instance
+    """
+
     filepaths = load_yaml(filename=FILEPATHS_FILE)
     model_config = load_yaml(MODEL_CONFIG_FILE)
 
@@ -34,14 +56,3 @@ def get_regressor():
         filepaths["model_regressor_path"].format(model=model_config["model"])
     )
     return regressor
-
-
-def get_model_parameters():
-    model_config = load_yaml(MODEL_CONFIG_FILE)
-
-    model_parameters = {}
-    model_parameters["model"] = model_config["model"]
-    model_parameters["metric"] = model_config["metric"]
-    model_parameters["parametric_space"] = model_config["parametric_space"]
-
-    return model_parameters

@@ -6,8 +6,8 @@ static_parameters:
   random_state: null
 
 opt_config:
-  n_folds: 2
-  n_calls: 3
+  n_folds: 5
+  n_calls: 5
   n_random_starts: 1
   verbose: 1
   random_state: null

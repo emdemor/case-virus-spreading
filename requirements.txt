@@ -1,4 +1,4 @@
-catboost
+click==8.0.4
 dill==0.3.4
 fastparquet==0.8.1
 GitPython==3.1.27

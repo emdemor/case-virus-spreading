@@ -1,21 +1,54 @@
+from typing import Callable
 import xgboost
 import numpy as np
+import pandas as pd
 from tqdm import tqdm
+from sklearn.base import RegressorMixin
 from sklearn.model_selection import KFold, StratifiedKFold
 
 
 def cross_validate_score(
-    X,
-    y,
-    estimator,
-    scoring,
-    verbose=1,
-    n_folds=5,
-    random_state=42,
-    fit_params={},
-    minimize=True,
-    sample=None,
-):
+    X: pd.DataFrame,
+    y: pd.Series,
+    estimator: RegressorMixin,
+    scoring: Callable,
+    verbose: int = 1,
+    n_folds: int = 5,
+    random_state: int = 42,
+    fit_params: dict = {},
+    minimize: bool = True,
+    sample: int = None,
+) -> float:
+    """Evaluates cross-validation score
+
+    Parameters
+    ----------
+    X : pd.DataFrame
+        Model features
+    y : pd.Series
+        Response variable
+    estimator : RegressorMixin
+        Regressor model instance
+    scoring : Callable
+        Funciton defining the model metric
+    verbose : int, optional
+        Level of logging, by default 1
+    n_folds : int, optional
+        The number of folds in cross-validation, by default 5
+    random_state : int, optional
+        Random seed, by default 42
+    fit_params : dict, optional
+        Parameters to be passed on fit method, by default {}
+    minimize : bool, optional
+        If the metric is better when is lower, by default True
+    sample : int, optional
+        Sample size to be used in each step for stocastic optimization, by default None
+
+    Returns
+    -------
+    float
+        Value of metric mean
+    """
 
     scores = []
 
