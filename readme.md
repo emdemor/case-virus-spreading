@@ -3,13 +3,13 @@
 
 ## Preparando ambiente
 
-* conda
+* Configurar o ambiente conda
 ``` bash
-conda env create -f environment.yml --prefix=venv/ --force
+conda env create -n neoway --file environment.yml
+conda activate neoway
 ```
 
-
-* pip
+* Configurando as variáveis de ambiente
 ``` bash
-pip install -r requirements.txt
+export PYTHONPATH=$PYTHONPATH:$(pwd)
 ```
