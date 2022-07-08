@@ -93,13 +93,13 @@ V1_transporte_mais_utilizado:
   constant_impute: publico
   encode:
     categories: ["publico", "particular", "taxi"]
-    drop_columns: ["taxi"]
+    drop_columns: ["taxi", "particular"]
 
 V2_transporte_mais_utilizado:
   constant_impute: publico
   encode:
     categories: ["publico", "particular", "taxi"]
-    drop_columns: ["taxi"]
+    drop_columns: ["taxi", "particular"]
 
 V1_qt_filhos:
   constant_impute: 0
