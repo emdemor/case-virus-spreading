@@ -26,7 +26,7 @@ def build_features(X: pd.DataFrame) -> pd.DataFrame:
 
     X["V1_estado_civil"] = np.where(
         (X["V1_estado_civil"] == "casado") | (X["V1_estado_civil"] == "divorciado"),
-        "caso_ou_divorciado",
+        "casado_ou_divorciado",
         X["V1_estado_civil"],
     )
 

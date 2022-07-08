@@ -82,7 +82,7 @@ V2_IMC:
 V1_estado_civil:
   constant_impute: solteiro
   encode:
-    categories: ["caso_ou_divorciado", "viuvo", "solteiro"]
+    categories: ["casado_ou_divorciado", "viuvo", "solteiro"]
     drop_columns: ["viuvo"]
 
 V2_estado_civil:
