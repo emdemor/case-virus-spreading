@@ -38,6 +38,9 @@ def predict(output_file):
     logging.info("Applying preprocessing pipeline")
     X_pred_transf = preprocessing.transform(X_pred)
 
+    logging.info("Persisting transformed features")
+    data.persist_processed_table(X_pred_transf, "X_pred_transf")
+
     logging.info("Importing model")
     model = get_regressor()
 
