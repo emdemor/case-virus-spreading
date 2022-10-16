@@ -4,12 +4,12 @@ import os
 import click
 import pandas as pd
 import numpy as np
-from src.base.commons import load_yaml
+from base.commons import load_yaml
 
-from src.base.logger import logging
-from src.model.regressor import get_regressor
-from src.model import preprocessing, data
-from src.global_variables import FILEPATHS_FILE
+from base.logger import logging
+from model.regressor import get_regressor
+from model import preprocessing, data
+from global_variables import FILEPATHS_FILE
 
 FILEPATHS = load_yaml(filename=FILEPATHS_FILE)
 

@@ -1,11 +1,11 @@
-from src.base.logger import logging
+from base.logger import logging
 import unidecode
 from typing import Any
 import numpy as np
 import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 import unidecode
-from src.base.commons import load_yaml, to_snake_case
+from base.commons import load_yaml, to_snake_case
 
 PARAMETERS_CONFIG = load_yaml(filename="config/parameters.yaml")
 

@@ -4,9 +4,9 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-from src.base.logger import logging
-from src.base.commons import load_yaml, read_csv
-from src.global_variables import (
+from base.logger import logging
+from base.commons import load_yaml, read_csv
+from global_variables import (
     FEATURE_PARAMETERS_FILE,
     FILEPATHS_FILE,
     PARAMETERS_FILE,

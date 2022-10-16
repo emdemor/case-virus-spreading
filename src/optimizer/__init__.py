@@ -1,15 +1,15 @@
 import pandas as pd
-from src.model.data import read_data_train_test
-from src.base.commons import dump_json, dump_pickle, load_json, load_yaml
-from src.base.logger import logging
-from src.model.regressor import set_regressor
-from src.optimizer.space import eval_parametric_space_dimension
+from model.data import read_data_train_test
+from base.commons import dump_json, dump_pickle, load_json, load_yaml
+from base.logger import logging
+from model.regressor import set_regressor
+from optimizer.space import eval_parametric_space_dimension
 from skopt import gp_minimize
 from skopt.utils import use_named_args
 from scipy.optimize import OptimizeResult
-from src.optimizer.cross_validation import cross_validate_score
+from optimizer.cross_validation import cross_validate_score
 from sklearn.metrics import r2_score, mean_absolute_error
-from src.global_variables import (
+from global_variables import (
     FEATURE_PARAMETERS_FILE,
     FILEPATHS_FILE,
     PARAMETERS_FILE,

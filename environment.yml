@@ -1,4 +1,4 @@
-name: case-neoway
+name: case-spreading
 channels:
   - conda-forge
   - defaults

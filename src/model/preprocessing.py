@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
-from src.base.logger import logging
-from src.base.commons import load_yaml
-from src.model.features import build_features
+from base.logger import logging
+from base.commons import load_yaml
+from model.features import build_features
 
-from src.global_variables import FEATURE_PARAMETERS_FILE, PARAMETERS_FILE
+from global_variables import FEATURE_PARAMETERS_FILE, PARAMETERS_FILE
 
 
 def transform(X: pd.DataFrame) -> pd.DataFrame:

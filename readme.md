@@ -5,14 +5,14 @@
 
 * Clonar o repositório
 ```bash
-git clone git@github.com:emdemor/case-neoway.git
+git clone git@github.com:emdemor/case-spreading.git
 ```
 
 * Configurar o ambiente conda
 ``` bash
-cd case-neoway
-conda env create -n case-neoway --file environment.yml
-conda activate case-neoway
+cd case-spreading
+conda env create -n case-spreading --file environment.yml
+conda activate case-spreading
 ```
 
 * Rodar o makefile

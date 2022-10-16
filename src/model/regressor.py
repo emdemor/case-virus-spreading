@@ -1,8 +1,8 @@
 from sklearn.base import RegressorMixin
 from xgboost import XGBRegressor
 from lightgbm import LGBMRegressor
-from src.base.commons import load_json, load_pickle, load_yaml
-from src.global_variables import (
+from base.commons import load_json, load_pickle, load_yaml
+from global_variables import (
     FEATURE_PARAMETERS_FILE,
     FILEPATHS_FILE,
     PARAMETERS_FILE,

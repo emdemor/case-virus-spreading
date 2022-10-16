@@ -8,7 +8,7 @@ import yaml
 import dill as pickle
 from sklearn.base import TransformerMixin
 from git.exc import InvalidGitRepositoryError
-from src.base.logger import logging
+from base.logger import logging
 
 
 class NpEncoder(json.JSONEncoder):
